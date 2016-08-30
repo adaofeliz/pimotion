@@ -1,8 +1,6 @@
-[cloudapp]
-username=__your_cloudapp_email__
-password=__your_cloudapp_password__
+[dropbox]
+api_token=__your_dropbox_token__
 
-[m2x]
-api_key=
-device_id=
-stream=
+[slack]
+token=__your_slack_token__
+channel=__your_slack_channel__

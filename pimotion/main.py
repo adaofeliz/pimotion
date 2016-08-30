@@ -1,33 +1,40 @@
-from pimotion import PiMotion
-from cloudapp import CloudAppAPI
-from cloudapp.exceptions import CloudAppHttpError
-from m2x.client import M2XClient
 from requests.exceptions import HTTPError, RequestException
+from pimotion import PiMotion
+from slackclient import SlackClient
+from datetime import datetime
+import calendar
 import ConfigParser
-
+import dropbox
 
 Config = ConfigParser.ConfigParser()
 Config.read('settings.cfg')
 
-
 def callback(path):
-    client = M2XClient(Config.get('m2x', 'api_key'))
     try:
-        api = CloudAppAPI(Config.get('cloudapp', 'username'), Config.get('cloudapp', 'password'))
-        url = api.upload(path)
-        print 'Public URL: ' + url
+        client = dropbox.client.DropboxClient(Config.get('dropbox', 'api_token'))
 
-        stream = client.device(Config.get('m2x', 'device_id')).stream(Config.get('m2x', 'stream'))
-        result = stream.add_value(url)
-        print "Posted URL to M2X stream %s" % Config.get('m2x', 'stream')
+        # File Name
+        fileName = str(calendar.timegm(datetime.now().utctimetuple())) + '.jpg'
+
+        # Upload and Generate Media Link
+        response = client.put_file(fileName, open(path, 'rb'))
+        metadata = client.media(response['path'])
+
+        # Notify Slack
+        slack = SlackClient(Config.get('slack', 'token'))
+        slack.api_call(
+            "chat.postMessage", 
+            channel=Config.get('slack', 'channel'), 
+            text="Motion Detected :camera_with_flash:: " + str(metadata['url']),
+            unfurl_links="true",
+            username='PiMotion', 
+            icon_emoji=':video_camera:')
+
     except HTTPError, e:
         print 'ERROR: '
         print '  STATUS: %s' % client.last_response.status
         print '  HEADERS: %s' % client.last_response.headers
         print '  BODY: %s' % client.last_response.json
-    except (RequestException, CloudAppHttpError), e:
-        print 'CloudApp ERROR:' + e.message
-
 
 motion = PiMotion(verbose=True, post_capture_callback=callback)
 motion.start()

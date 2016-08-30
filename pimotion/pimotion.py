@@ -95,13 +95,15 @@ class PiMotion:
             try:
                 self.__print('Started recording')
                 camera.start_recording(
-                    '/dev/null', format='h264',
+                    '/dev/null', 
+                    format='h264',
                     motion_output=MyMotionDetector(camera, handler)
                 )
 
                 while True:
                     handler.tick()
                     time.sleep(1)
+
             finally:
                 camera.stop_recording()
                 self.__print('Stopped recording')

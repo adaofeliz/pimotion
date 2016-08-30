@@ -1,8 +1,8 @@
-numpy==1.6.2
+dropbox==6.7.0
 PIL==1.1.7
-requests==2.10.0
-picamera==1.10
-m2x==5.2.0
-pyopenssl==16.0.0
-ndg-httpsclient==0.4.0
-pyasn1==0.1.9
+requests==2.11.1
+six==1.10.0
+slackclient==1.0.1
+typing==3.5.2.2
+urllib3==1.16
+websocket-client==0.37.0
