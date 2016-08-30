@@ -20,15 +20,16 @@ def callback(path):
         response = client.put_file(fileName, open(path, 'rb'))
         metadata = client.media(response['path'])
 
-        # Notify Slack
-        slack = SlackClient(Config.get('slack', 'token'))
-        slack.api_call(
-            "chat.postMessage", 
-            channel=Config.get('slack', 'channel'), 
-            text="Motion Detected :camera_with_flash:: " + str(metadata['url']),
-            unfurl_links="true",
-            username='PiMotion', 
-            icon_emoji=':video_camera:')
+        # (Optional) Notify Slack
+        if Config.get('slack', 'enabled') == 'True':
+            slack = SlackClient(Config.get('slack', 'token'))
+            slack.api_call(
+                "chat.postMessage", 
+                channel=Config.get('slack', 'channel'), 
+                text="Motion Detected :camera_with_flash:: " + str(metadata['url']),
+                unfurl_links="true",
+                username='PiMotion', 
+                icon_emoji=':video_camera:')
 
     except HTTPError, e:
         print 'ERROR: '

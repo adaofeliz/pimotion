@@ -2,5 +2,6 @@
 api_token=__your_dropbox_token__
 
 [slack]
+enabled=False
 token=__your_slack_token__
 channel=__your_slack_channel__
