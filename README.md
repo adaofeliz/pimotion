@@ -7,8 +7,8 @@ Pimotion is a motion detector application that runs on the Raspberry PI. It capt
 
 ### Prerequisites
 
-* A Dropbox App token, that can be generated at [https://www.dropbox.com/developers/apps]
-* (Optional) A Slack token for notifications, that can be generated at [https://ymedia-team.slack.com/apps/manage/custom-integrations]
+* A Dropbox App token, that can be generated at (Dropbox Apps)[https://www.dropbox.com/developers/apps]
+* (Optional) A Slack token for notifications, that can be generated at (Slack Integrations)[https://ymedia-team.slack.com/apps/manage/custom-integrations]
 
 ### Installation
 
