@@ -85,7 +85,7 @@ class PiMotion:
     def start(self):
         with picamera.PiCamera() as camera:
             camera.resolution = (1280, 960)
-            camera.framerate = 24
+            camera.framerate = 10
 
             handler = CaptureHandler(camera, self.post_capture_callback)
 
