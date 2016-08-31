@@ -1,4 +1,4 @@
-Pimotion
+Pimotion (DROPBOX VERSION)
 ========
 
 ![PIMotion Logo](docs/logo-256.png?raw=true)
